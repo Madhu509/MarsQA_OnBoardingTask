@@ -26,7 +26,21 @@ namespace MarsQA_1.Pages
         public IWebElement AvailDesicon => Driver.driver.FindElement(By.XPath("//div[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/div/div/div/h3/span/i"));
         public IWebElement Descriptiontxt => Driver.driver.FindElement(By.XPath("//textarea[@placeholder='Please tell us about any hobbies, additional expertise, or anything else you’d like to add.']"));
         public IWebElement BtnDesSave => Driver.driver.FindElement(By.XPath("//button[@type='button']"));
-       
+
+        //Profile Change Password
+        public IWebElement welcomeTab => Driver.driver.FindElement(By.XPath("/html//div[@id='account-profile-section']/div/div[1]/div[2]/div/span"));
+        public IWebElement ChangPassDropdow => Driver.driver.FindElement(By.XPath("/html//div[@id='account-profile-section']/div/div[1]/div[2]/div/span/div[@class='menu transition visible']/a[2]"));
+        public IWebElement CurrPass => Driver.driver.FindElement(By.XPath("//body[@class='dimmable dimmed']/div[4]//form//input[@name='oldPassword']"));
+        public IWebElement NewPass => Driver.driver.FindElement(By.XPath("//body[@class='dimmable dimmed']/div[4]//form//input[@name='newPassword']"));
+        public IWebElement ConfirmPass => Driver.driver.FindElement(By.XPath("//body[@class='dimmable dimmed']/div[4]//form//input[@name='confirmPassword']"));
+        public IWebElement SaveButton => Driver.driver.FindElement(By.XPath("//body[@class='dimmable dimmed']/div[4]//form//button[@role='button']"));
+        
+        //Profile Chat
+        public IWebElement Chaticon => Driver.driver.FindElement(By.XPath("/html//div[@id='message-section']//a[@href='/Home/Message']"));
+        public IWebElement ChatSearch => Driver.driver.FindElement(By.XPath("/html//div[@id='chatRoomContainer']/div[@class='chatRoom']//input[@class='prompt']"));
+        public IWebElement Chatname => Driver.driver.FindElement(By.XPath("/html//div[@id='chatList']/div[1]/div[@class='content']/div[@class='header']"));
+        public IWebElement Chattextbox => Driver.driver.FindElement(By.XPath("/html//input[@id='chatTextBox']"));
+        public IWebElement chatsendtab => Driver.driver.FindElement(By.XPath("/html//button[@id='btnSend']"));
        
 
         public void ClickProTab()
@@ -108,5 +122,75 @@ namespace MarsQA_1.Pages
         }
         #endregion
 
+        #region Change Password
+        public void ChangePasswordtab()
+        {
+          
+            Thread.Sleep(2000);
+            // Navigate to change password page
+            welcomeTab.Click();
+            Thread.Sleep(2000);
+            ChangPassDropdow.Click();
+        }
+        public void ChangePassword()
+        {
+            ExcelLibHelper.PopulateInCollection(ConstantHelpers.ExcelPath, "Profile");
+            Thread.Sleep(2000);
+            CurrPass.SendKeys(ExcelLibHelper.ReadData(2, "CurrentPassword"));
+            NewPass.SendKeys(ExcelLibHelper.ReadData(2, "NewPassword"));
+            Thread.Sleep(2000);
+            ConfirmPass.SendKeys(ExcelLibHelper.ReadData(2, "ConfirmPassword"));
+        }
+        public void SaveBtn()
+        {
+            // click on save button
+            SaveButton.Click();
+            Thread.Sleep(5000);
+
+        }
+
+        #endregion
+
+
+        #region Chat in profile
+
+        public void Chat() => Chaticon.Click();
+
+        public void Chatsearch()
+        {
+            ExcelLibHelper.PopulateInCollection(ConstantHelpers.ExcelPath, "Profile");
+            Thread.Sleep(2000);
+            ChatSearch.Click();
+            ChatSearch.SendKeys(ExcelLibHelper.ReadData(2, "ChatSearch"));
+        }
+
+        public void ChatsearchVisible()
+        {
+            ExcelLibHelper.PopulateInCollection(ConstantHelpers.ExcelPath, "Profile");
+            Thread.Sleep(2000);
+            String Searchtxt = Driver.driver.FindElement(By.XPath("//div[normalize-space()='madhurima']")).Text; ;
+            Assert.AreEqual(Searchtxt, ExcelLibHelper.ReadData(2, "Chatsearch"));
+
+        }
+        public void ChatMessage()
+        {
+            ExcelLibHelper.PopulateInCollection(ConstantHelpers.ExcelPath, "Profile");
+            Thread.Sleep(2000);
+            Chattextbox.Click();
+            Chattextbox.SendKeys(ExcelLibHelper.ReadData(2, "ChatTextBox"));
+
+        }
+        public void ChatSendbtn()
+        {
+            chatsendtab.Click();
+
+        }
+
+        #endregion
+
+        #region Validate Chat
+
+
+        #endregion
     }
 }

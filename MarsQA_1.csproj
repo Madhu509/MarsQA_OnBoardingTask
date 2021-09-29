@@ -14,7 +14,7 @@
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
-    <PackageReference Include="ExtentReports" Version="4.0.0" />
+    <PackageReference Include="ExtentReports" Version="2.41.0" />
     <PackageReference Include="Gherkin" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.0.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.7.2" />
@@ -48,6 +48,10 @@
 
   <ItemGroup>
     <Reference Include="System.Activities" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Steps\ManageRequetsSteps\" />
   </ItemGroup>
 
 </Project>

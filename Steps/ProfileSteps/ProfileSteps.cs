@@ -6,20 +6,20 @@ using TechTalk.SpecFlow;
 namespace MarsQA_1.Feature.ProfileFeatures
 {
     [Binding]
-    public class ProfileSteps 
+    public class ProfileSteps
     {
         ProfilePage page = new ProfilePage();
 
         [Given(@"User is on Profile Tab")]
         public void GivenUserIsOnProfileTab()
         {
-          page.ClickProTab();
+            page.ClickProTab();
         }
-        
+
         [Given(@"User Clicks on Availabiltytimelink")]
         public void GivenUserClicksOnAvailabiltytimelink()
         {
-           page.AvailabiTimeLnk();
+            page.AvailabiTimeLnk();
         }
 
         [Then(@"Choose one option from the dropdown\.")]
@@ -53,13 +53,13 @@ namespace MarsQA_1.Feature.ProfileFeatures
         {
             page.AvailabiTargetLnk();
         }
-        
+
         [Given(@"User Clicks on Descriptiontab")]
         public void GivenUserClicksOnDescriptiontab()
         {
             page.AvailabiDesLnk();
         }
-        
+
         [Given(@"User adds Description text")]
         public void GivenUserAddsDescriptionText()
         {
@@ -72,9 +72,53 @@ namespace MarsQA_1.Feature.ProfileFeatures
             page.AvailableDescripsave();
         }
 
-       
-    } 
-       
-           
+        [Given(@"the user Clicks on User tab and changepassword link")]
+        public void GivenTheUserClicksOnUserTabAndChangepasswordLink()
+        {
+            page.ChangePasswordtab();
+        }
+        
+        [Given(@"the user inputs current password,new password and confirmpassword")]
+        public void GivenTheUserInputsCurrentPasswordNewPasswordAndConfirmpassword()
+        {
+            page.ChangePassword();
+        }
+        
+        [Given(@"Clicks on save button the details are saved")]
+        public void GivenClicksOnSaveButtonTheDetailsAreSaved()
+        {
+            page.SaveBtn();
+        }
+        
+        [Given(@"the user Clicks on Chat tab Chat screen opens")]
+        public void GivenTheUserClicksOnChatTabChatScreenOpens()
+        {
+            page.Chat();
+        }
+        
+        [When(@"the user inputs name in search input box")]
+        public void WhenTheUserInputsNameInSearchInputBox()
+        {
+            page.Chatsearch();
+        }
+        
+        
+        [Then(@"Chats between the input name and user should be visible")]
+        public void ThenChatsBetweenTheInputNameAndUserShouldBeVisible()
+        {
+            page.ChatsearchVisible();
+        }
+        
+        [Then(@"to send message add message in input box")]
+        public void ThenToSendMessageAddMessageInInputBox()
+        {
+            page.ChatMessage();
+        }
+        
+        [Then(@"Clicks on send button")]
+        public void ThenClicksOnSendButton()
+        {
+            page.ChatSendbtn();
+        }
     }
-
+}

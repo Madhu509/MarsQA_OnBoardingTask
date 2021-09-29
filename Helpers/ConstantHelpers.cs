@@ -18,7 +18,7 @@ namespace MarsQA_1.Helpers
         public static string ReportsPath = @"C:\Users\madhu\Desktop\MarsQA_1\MarsQA_1\TestReports\Reports";
 
         //ReportXML Path
-        public static string ReportXMLPath = "";
+        public static string ReportXMLPath = @"C:\Users\madhu\Desktop\Advance_Task2";
 
         //ExcelPath
         public static string ExcelPath = @"C:\Users\madhu\Desktop\MarsQA_1\MarsQA_1\Data\Mars.xlsx";

@@ -1,8 +1,7 @@
-﻿using AventStack.ExtentReports;
-using AventStack.ExtentReports.Gherkin.Model;
-using AventStack.ExtentReports.Reporter;
-using AventStack.ExtentReports.Reporter.Configuration;
-using MarsQA_1.Helpers;
+﻿using MarsQA_1.Helpers;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using RelevantCodes.ExtentReports;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,11 +19,19 @@ namespace MArsQASpecflow.SpecflowPages.Utils
     {
         //For additional details on SpecFlow hooks see http://go.specflow.org/doc-hooks
 
-        private static ExtentTest featureName;
-        private static ExtentTest scenario;
-        private static ExtentReports extent;
+        //private static ExtentTest featureName;
+        //private static ExtentTest scenario;
+        // private static ExtentReports extent;
         public static string ReportPath;
-        private static ExtentHtmlReporter htmlReporter;
+        public static string ReportXMLPath;
+        //private static ExtentHtmlReporter htmlReporter;
+
+        #region reports
+        public static ExtentTest test;
+        public static ExtentReports extent;
+
+        #endregion
+
 
         [BeforeScenario]
         [Obsolete]
@@ -36,8 +43,8 @@ namespace MArsQASpecflow.SpecflowPages.Utils
             //call the SignIn class
            MarsQA_1.Pages.SignIn.SigninStep();
 
-            Console.WriteLine("BeforeScenario");
-            scenario = featureName.CreateNode<Scenario>(ScenarioContext.Current.ScenarioInfo.Title);
+           //Console.WriteLine("BeforeScenario");
+            //scenario = featureName.CreateNode<Scenario>(ScenarioContext.Current.ScenarioInfo.Title);
         }
 
 
@@ -45,26 +52,27 @@ namespace MArsQASpecflow.SpecflowPages.Utils
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
+            extent = new ExtentReports(ReportPath, false, DisplayOrder.NewestFirst);
+            extent.LoadConfig(ReportXMLPath);
 
-
-            string reportPath = ConstantHelpers.ReportsPath;
-            htmlReporter = new ExtentHtmlReporter(reportPath);
-            extent = new ExtentReports();
-            extent.AttachReporter(htmlReporter);
-            extent.AddTestRunnerLogs(reportPath + "Extent Config.xml");
+            //string reportPath = ConstantHelpers.ReportsPath;
+            //htmlReporter = new ExtentHtmlReporter(reportPath);
+            //extent = new ExtentReports();
+            // extent.AttachReporter(htmlReporter);
+            //extent.AddTestRunnerLogs(reportPath + "Extent Config.xml");
         }
 
-        [BeforeFeature]
+        /*[BeforeFeature]
         [Obsolete]
         public static void BeforeFeature()
         {
             //Create dynamic feature name
             featureName = extent.CreateTest<Feature>(FeatureContext.Current.FeatureInfo.Title);
             Console.WriteLine("BeforeFeature");
-        }
+        }*/
 
 
-        [AfterStep]
+       /* [AfterStep]
         [Obsolete]
         public void InsertReportingSteps()
         {
@@ -99,9 +107,9 @@ namespace MArsQASpecflow.SpecflowPages.Utils
                     scenario.CreateNode<And>(ScenarioStepContext.Current.StepInfo.Text).Fail(ScenarioContext.Current.TestError.Message);
                 }
             }
-        }
+        }*/
 
-        [AfterTestRun]
+        /*[AfterTestRun]
         public static void AfterTestRun()
         {
 
@@ -109,25 +117,29 @@ namespace MArsQASpecflow.SpecflowPages.Utils
             //Flush report once test completes
             extent.Flush();
             //kill the browser
-        }
+        }*/
 
         [AfterScenario]
         public void TearDown()
         {
 
             Thread.Sleep(5000);
-            // Screenshot
-            string img = SaveScreenShotClass.SaveScreenshot(Driver.driver, "Report");
-            //   test.Log(Status.Info, "Snapshot below: " + test.AddScreenCaptureFromPath());
-
+            if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
+            {
+                String img = SaveScreenShotClass.SaveScreenshot(driver, "Report");
+                test.Log(LogStatus.Error, "Image example: " + test.AddScreenCapture(img));
+            }
+            else
+            {
+                String img = SaveScreenShotClass.SaveScreenshot(driver, "Report");
+                test.Log(LogStatus.Pass, "Image example: " + test.AddScreenCapture(img));
+            }
             // end test. (Reports)
-            //    CommonMethods.extent.RemoveTest(CommonMethods.test);
-
+            extent.EndTest(test);
             // calling Flush writes everything to the log file (Reports)
-            //     CommonMethods.extent.Flush();
-
-            //Close the browser
-            driver.Quit();
+            extent.Flush();
+            // Close the driver :)       
+            driver.Close();
         }
 
 

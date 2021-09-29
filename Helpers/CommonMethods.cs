@@ -42,9 +42,9 @@ namespace MarsQA_1.Helpers
         //ExtentReports
         //ExtentReports
         #region reports
-        public static ExtentTest test;
-        public static ExtentReports extent;
-        private static ExtentHtmlReporter htmlReporter;
+        //public static ExtentTest test;
+       // public static ExtentReports extent;
+       // private static ExtentHtmlReporter htmlReporter;
 
         /* public static void ExtentReports()
          {
